@@ -275,7 +275,7 @@ struct HeaderBlock: View {
             Text(eyebrow)
                 .font(.caption.weight(.black))
                 .foregroundStyle(AppPalette.mint)
-                .tracking(1.2)
+                .kerning(1.2)
 
             Text(title)
                 .font(.system(size: 34, weight: .black, design: .rounded))
