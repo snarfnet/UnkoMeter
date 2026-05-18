@@ -195,9 +195,9 @@ async function updateAppInfoLocalization() {
 }
 
 async function getOrCreateScreenshotSet(localizationId, screenshotDisplayType) {
-  const query = `/v1/appStoreVersionLocalizations/${localizationId}/appScreenshotSets?filter[screenshotDisplayType]=${screenshotDisplayType}&include=appScreenshots&limit=10`;
-  const response = await api('GET', query);
-  if (response.data.length > 0) return response.data[0];
+  const response = await api('GET', `/v1/appStoreVersionLocalizations/${localizationId}/appScreenshotSets?limit=20`);
+  const existing = response.data.find((set) => set.attributes.screenshotDisplayType === screenshotDisplayType);
+  if (existing) return existing;
 
   return (await api('POST', '/v1/appScreenshotSets', {
     data: {
@@ -222,6 +222,7 @@ async function deleteScreenshots(setId) {
 async function createScreenshot(setId, filePath) {
   const buffer = fs.readFileSync(filePath);
   const fileName = path.basename(filePath);
+  const checksum = crypto.createHash('md5').update(buffer).digest('base64');
   const created = (await api('POST', '/v1/appScreenshots', {
     data: {
       type: 'appScreenshots',
@@ -247,7 +248,10 @@ async function createScreenshot(setId, filePath) {
     data: {
       type: 'appScreenshots',
       id: created.id,
-      attributes: { uploaded: true },
+      attributes: {
+        uploaded: true,
+        sourceFileChecksum: checksum,
+      },
     },
   });
 }
@@ -293,29 +297,167 @@ async function attachBuild(versionId) {
   await api('PATCH', `/v1/appStoreVersions/${versionId}/relationships/build`, {
     data: { type: 'builds', id: build.id },
   }, { 'Content-Type': 'application/vnd.api+json' });
+  try {
+    await api('PATCH', `/v1/builds/${build.id}`, {
+      data: {
+        type: 'builds',
+        id: build.id,
+        attributes: { usesNonExemptEncryption: false },
+      },
+    });
+  } catch (error) {
+    if (!String(error.message).includes('already set')) {
+      throw error;
+    }
+  }
   console.log(`Attached build: ${build.attributes.version} (${build.attributes.buildNumber})`);
   return build;
 }
 
 async function updateReviewDetails(versionId) {
   const response = await api('GET', `/v1/appStoreVersions/${versionId}/appStoreReviewDetail`);
-  const detail = response.data;
-  if (!detail) return;
-
-  await api('PATCH', `/v1/appStoreReviewDetails/${detail.id}`, {
+  let detail = response.data;
+  const payload = {
     data: {
       type: 'appStoreReviewDetails',
-      id: detail.id,
       attributes: {
         contactFirstName: 'UnkoMeter',
         contactLastName: 'Support',
-        contactPhone: '+810000000000',
-        contactEmail: 'support@example.com',
+        contactPhone: '+818023689194',
+        contactEmail: 'tokyonasu@yahoo.co.jp',
         demoAccountRequired: false,
+        demoAccountName: '',
+        demoAccountPassword: '',
         notes: 'The app stores toilet duration, stool condition, and optional notes locally on device using UserDefaults. It uses Google Mobile Ads SDK to show banner ads. It does not require login. The app is not a medical diagnostic tool.',
+      },
+    }
+  };
+
+  if (!detail) {
+    payload.data.relationships = {
+      appStoreVersion: { data: { type: 'appStoreVersions', id: versionId } },
+    };
+    detail = (await api('POST', '/v1/appStoreReviewDetails', payload)).data;
+    return;
+  }
+
+  payload.data.id = detail.id;
+  await api('PATCH', `/v1/appStoreReviewDetails/${detail.id}`, payload);
+}
+
+async function getAppInfo() {
+  return (await api('GET', `/v1/apps/${APP_ID}/appInfos?limit=1`)).data[0];
+}
+
+async function updateAgeRatingAndCategory() {
+  const appInfo = await getAppInfo();
+  if (!appInfo) return;
+
+  await api('PATCH', `/v1/ageRatingDeclarations/${appInfo.id}`, {
+    data: {
+      type: 'ageRatingDeclarations',
+      id: appInfo.id,
+      attributes: {
+        alcoholTobaccoOrDrugUseOrReferences: 'NONE',
+        contests: 'NONE',
+        gamblingSimulated: 'NONE',
+        gunsOrOtherWeapons: 'NONE',
+        horrorOrFearThemes: 'NONE',
+        matureOrSuggestiveThemes: 'NONE',
+        medicalOrTreatmentInformation: 'NONE',
+        profanityOrCrudeHumor: 'NONE',
+        sexualContentGraphicAndNudity: 'NONE',
+        sexualContentOrNudity: 'NONE',
+        violenceCartoonOrFantasy: 'NONE',
+        violenceRealistic: 'NONE',
+        violenceRealisticProlongedGraphicOrSadistic: 'NONE',
+        gambling: false,
+        lootBox: false,
+        unrestrictedWebAccess: false,
+        messagingAndChat: false,
+        ageAssurance: false,
+        advertising: true,
+        parentalControls: false,
+        userGeneratedContent: false,
+        healthOrWellnessTopics: true,
       },
     },
   });
+
+  await api('PATCH', `/v1/appInfos/${appInfo.id}`, {
+    data: {
+      type: 'appInfos',
+      id: appInfo.id,
+      relationships: {
+        primaryCategory: {
+          data: { type: 'appCategories', id: 'HEALTH_AND_FITNESS' },
+        },
+      },
+    },
+  });
+}
+
+async function updateVersionAndAppRequirements(versionId) {
+  await api('PATCH', `/v1/appStoreVersions/${versionId}`, {
+    data: {
+      type: 'appStoreVersions',
+      id: versionId,
+      attributes: {
+        copyright: '2026 Tokyo Nasu',
+      },
+    },
+  });
+
+  await api('PATCH', `/v1/apps/${APP_ID}`, {
+    data: {
+      type: 'apps',
+      id: APP_ID,
+      attributes: {
+        contentRightsDeclaration: 'DOES_NOT_USE_THIRD_PARTY_CONTENT',
+      },
+    },
+  });
+}
+
+async function updatePricing() {
+  const pricePoints = await api('GET', `/v1/apps/${APP_ID}/appPricePoints?filter[territory]=USA&limit=20`);
+  const freePoint = pricePoints.data.find((point) => point.attributes.customerPrice === '0.0');
+  if (!freePoint) {
+    throw new Error('Free price point not found.');
+  }
+
+  try {
+    await api('POST', '/v1/appPriceSchedules', {
+      data: {
+        type: 'appPriceSchedules',
+        relationships: {
+          app: { data: { type: 'apps', id: APP_ID } },
+          manualPrices: {
+            data: [{ type: 'appPrices', id: '${free-price}' }],
+          },
+          baseTerritory: {
+            data: { type: 'territories', id: 'USA' },
+          },
+        },
+      },
+      included: [
+        {
+          type: 'appPrices',
+          id: '${free-price}',
+          attributes: {
+            startDate: null,
+          },
+          relationships: {
+            appPricePoint: { data: { type: 'appPricePoints', id: freePoint.id } },
+          },
+        },
+      ],
+    });
+  } catch (error) {
+    if (!String(error.message).includes('already') && !String(error.message).includes('409')) {
+      throw error;
+    }
+  }
 }
 
 async function status() {
@@ -350,22 +492,71 @@ async function builds() {
   })), null, 2));
 }
 
-async function sync() {
+async function sync(options = {}) {
+  const { screenshots = true } = options;
   const version = await getAppStoreVersion();
   console.log(`Version: ${version.attributes.versionString} (${version.attributes.appStoreState})`);
   await updateAppInfoLocalization();
+  await updateAgeRatingAndCategory();
+  console.log('Updated age rating and category.');
+  await updateVersionAndAppRequirements(version.id);
+  console.log('Updated version and content rights.');
+  await updatePricing();
+  console.log('Updated pricing.');
   const localization = await getLocalization(version.id);
   console.log(`Localization: ${localization.attributes.locale}`);
   await updateLocalization(localization.id);
   console.log('Updated metadata.');
-  await uploadScreenshots(localization.id);
+  if (screenshots) {
+    await uploadScreenshots(localization.id);
+  }
   await updateReviewDetails(version.id);
   console.log('Updated review details.');
   await attachBuild(version.id);
 }
 
+async function submit() {
+  const version = await getAppStoreVersion();
+  await sync({ screenshots: false });
+  const reviewSubmission = (await api('POST', '/v1/reviewSubmissions', {
+    data: {
+      type: 'reviewSubmissions',
+      relationships: {
+        app: {
+          data: { type: 'apps', id: APP_ID },
+        },
+      },
+    },
+  })).data;
+
+  await api('POST', '/v1/reviewSubmissionItems', {
+    data: {
+      type: 'reviewSubmissionItems',
+      relationships: {
+        reviewSubmission: {
+          data: { type: 'reviewSubmissions', id: reviewSubmission.id },
+        },
+        appStoreVersion: {
+          data: { type: 'appStoreVersions', id: version.id },
+        },
+      },
+    },
+  });
+
+  await api('PATCH', `/v1/reviewSubmissions/${reviewSubmission.id}`, {
+    data: {
+      type: 'reviewSubmissions',
+      id: reviewSubmission.id,
+      attributes: {
+        submitted: true,
+      },
+    },
+  });
+  console.log(`Submitted for review: ${reviewSubmission.id}`);
+}
+
 const command = process.argv[2] || 'status';
-const actions = { sync, status, builds };
+const actions = { sync, status, builds, submit };
 
 (actions[command] || status)().catch((error) => {
   console.error(error.message);
