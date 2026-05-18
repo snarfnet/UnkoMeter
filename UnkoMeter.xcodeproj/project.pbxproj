@@ -11,6 +11,8 @@
 		7A1A100B2C10000100100001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A10022C10000100100001 /* ContentView.swift */; };
 		7A1A100C2C10000100100001 /* ToiletTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A10032C10000100100001 /* ToiletTimer.swift */; };
 		7A1A100D2C10000100100001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A1A10042C10000100100001 /* Assets.xcassets */; };
+		7A1A10182C10000100100001 /* AdMobBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A101A2C10000100100001 /* AdMobBannerView.swift */; };
+		7A1A10192C10000100100001 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7A1A101C2C10000100100001 /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,7 @@
 		7A1A10032C10000100100001 /* ToiletTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletTimer.swift; sourceTree = "<group>"; };
 		7A1A10042C10000100100001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A1A10052C10000100100001 /* UnkoMeter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnkoMeter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A1A101A2C10000100100001 /* AdMobBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobBannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A1A10192C10000100100001 /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +50,7 @@
 				7A1A10012C10000100100001 /* App.swift */,
 				7A1A10022C10000100100001 /* ContentView.swift */,
 				7A1A10032C10000100100001 /* ToiletTimer.swift */,
+				7A1A101A2C10000100100001 /* AdMobBannerView.swift */,
 				7A1A10042C10000100100001 /* Assets.xcassets */,
 			);
 			path = UnkoMeter;
@@ -75,6 +80,9 @@
 			dependencies = (
 			);
 			name = UnkoMeter;
+			packageProductDependencies = (
+				7A1A101C2C10000100100001 /* GoogleMobileAds */,
+			);
 			productName = UnkoMeter;
 			productReference = 7A1A10052C10000100100001 /* UnkoMeter.app */;
 			productType = "com.apple.product-type.application";
@@ -105,6 +113,9 @@
 				Base,
 			);
 			mainGroup = 7A1A10072C10000100100001;
+			packageReferences = (
+				7A1A101B2C10000100100001 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
 			productRefGroup = 7A1A10092C10000100100001 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -133,6 +144,7 @@
 				7A1A100A2C10000100100001 /* App.swift in Sources */,
 				7A1A100B2C10000100100001 /* ContentView.swift in Sources */,
 				7A1A100C2C10000100100001 /* ToiletTimer.swift in Sources */,
+				7A1A10182C10000100100001 /* AdMobBannerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,7 +279,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = UnkoMeter;
+				INFOPLIST_KEY_GADApplicationIdentifier = "ca-app-pub-9404799280370656~5908531860";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier may be used to show relevant ads and measure ad performance.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,7 +313,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = UnkoMeter;
+				INFOPLIST_KEY_GADApplicationIdentifier = "ca-app-pub-9404799280370656~5908531860";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This identifier may be used to show relevant ads and measure ad performance.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -341,6 +357,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+/* Begin XCRemoteSwiftPackageReference section */
+		7A1A101B2C10000100100001 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7A1A101C2C10000100100001 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A1A101B2C10000100100001 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7A1A10112C10000100100001 /* Project object */;
 }

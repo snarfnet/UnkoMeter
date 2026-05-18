@@ -78,7 +78,9 @@ jobs:
             ASSETCATALOG_COMPILER_APPICON_NAME="AppIcon" \
             INFOPLIST_KEY_CFBundleIconName="AppIcon" \
             INFOPLIST_KEY_CFBundleVersion="${{ github.run_number }}" \
-            INFOPLIST_KEY_ITSAppUsesNonExemptEncryption="NO"
+            INFOPLIST_KEY_GADApplicationIdentifier="ca-app-pub-9404799280370656~5908531860" \
+            INFOPLIST_KEY_ITSAppUsesNonExemptEncryption="NO" \
+            INFOPLIST_KEY_NSUserTrackingUsageDescription="This identifier may be used to show relevant ads and measure ad performance."
 
       - name: Export IPA
         run: |

@@ -46,7 +46,7 @@ Health & Fitness
 
 ## Review Notes
 
-The app stores toilet duration, stool condition, and optional notes locally on device using UserDefaults. It does not require login, networking, analytics, ads, or third-party SDKs. The app is not a medical diagnostic tool.
+The app stores toilet duration, stool condition, and optional notes locally on device using UserDefaults. It uses Google Mobile Ads SDK to show banner ads. It does not require login. The app is not a medical diagnostic tool.
 
 ## Support URL
 
@@ -55,4 +55,3 @@ https://github.com/snarfnet/UnkoMeter
 ## Privacy Policy URL
 
 https://github.com/snarfnet/UnkoMeter/blob/main/docs/privacy-policy.md
-

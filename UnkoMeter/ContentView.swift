@@ -108,6 +108,13 @@ struct ContentView: View {
                     .tag(1)
             }
             .tint(AppPalette.mint)
+            .safeAreaInset(edge: .bottom) {
+                AdMobBannerView()
+                    .frame(width: 320, height: 50)
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 6)
+                    .background(.white.opacity(0.72))
+            }
 
             if showSplash {
                 SplashView()

@@ -46,7 +46,7 @@ Use `AppStore/privacy-answers-ja.md`.
 
 Current answer:
 
-Data Not Collected
+The app uses Google Mobile Ads SDK. The toilet log data stays on device, but App Store privacy answers must include the advertising SDK data practices.
 
 ## 5. Metadata
 
