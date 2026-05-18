@@ -7,3 +7,5 @@ xcuserdata/
 *.ipa
 *.dSYM.zip
 *.dSYM
+node_modules/
+package-lock.json

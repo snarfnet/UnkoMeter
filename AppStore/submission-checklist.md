@@ -23,13 +23,13 @@ The profile name must match `ExportOptions.plist` and the upload workflow.
 
 Add these repository secrets in GitHub:
 
-- `BUILD_CERTIFICATE_BASE64`
-- `P12_PASSWORD`
-- `BUILD_PROVISION_PROFILE_BASE64`
-- `KEYCHAIN_PASSWORD`
-- `ASC_KEY_ID`
-- `ASC_ISSUER_ID`
-- `ASC_API_KEY_P8`
+- `DIST_CERT_BASE64`
+- `DIST_CERT_PASSWORD`
+- `PROVISION_PROFILE_BASE64`
+- `PROVISION_PROFILE_NAME`
+- `APP_STORE_CONNECT_API_KEY_BASE64`
+- `APP_STORE_CONNECT_API_KEY_ID`
+- `APP_STORE_CONNECT_API_KEY_ISSUER_ID`
 
 Encoding commands on macOS:
 
@@ -38,7 +38,7 @@ base64 -i distribution_certificate.p12 | pbcopy
 base64 -i UnkoMeter_App_Store.mobileprovision | pbcopy
 ```
 
-For `ASC_API_KEY_P8`, paste the full `.p8` file text, including the BEGIN and END lines.
+The current project includes `scripts/create_app_store_signing.js` to generate the certificate and provisioning profile through the App Store Connect API.
 
 ## 4. App Privacy
 
@@ -67,4 +67,3 @@ After secrets are set, run the GitHub Actions workflow:
 `Upload to App Store Connect`
 
 When Apple finishes processing the build, choose it in App Store Connect and submit for review.
-
