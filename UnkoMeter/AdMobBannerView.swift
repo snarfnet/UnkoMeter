@@ -30,11 +30,12 @@ struct AdMobBannerView: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {
         guard let bannerView = context.coordinator.bannerView else { return }
         guard !context.coordinator.didLoad else { return }
+        guard AppDelegate.isAdSDKReady else { return }
 
         let rootVC = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .first { $0.activationState == .foregroundActive }?
-            .keyWindow?
+            .windows.first(where: { $0.isKeyWindow })?
             .rootViewController
 
         guard let rootVC else { return }

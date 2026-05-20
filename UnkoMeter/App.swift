@@ -9,13 +9,15 @@ enum DeviceCheck {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    static var isAdSDKReady = false
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        if DeviceCheck.isNativePhone {
-            DispatchQueue.main.async {
-                MobileAds.shared.start()
+        DispatchQueue.main.async {
+            MobileAds.shared.start { _ in
+                AppDelegate.isAdSDKReady = true
             }
         }
         return true
