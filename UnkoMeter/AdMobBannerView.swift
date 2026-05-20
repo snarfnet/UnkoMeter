@@ -2,50 +2,27 @@ import GoogleMobileAds
 import SwiftUI
 import UIKit
 
-struct AdMobBannerView: UIViewRepresentable {
+struct AdMobBannerView: UIViewControllerRepresentable {
     private let adUnitID = "ca-app-pub-9404799280370656/3282368527"
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-
-    func makeUIView(context: Context) -> UIView {
-        let container = UIView()
-        container.backgroundColor = .clear
+    func makeUIViewController(context: Context) -> UIViewController {
+        let controller = UIViewController()
+        controller.view.backgroundColor = .clear
 
         let bannerView = BannerView(adSize: AdSizeBanner)
         bannerView.adUnitID = adUnitID
+        bannerView.rootViewController = controller
         bannerView.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(bannerView)
 
+        controller.view.addSubview(bannerView)
         NSLayoutConstraint.activate([
-            bannerView.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            bannerView.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+            bannerView.centerXAnchor.constraint(equalTo: controller.view.centerXAnchor),
+            bannerView.centerYAnchor.constraint(equalTo: controller.view.centerYAnchor)
         ])
 
-        context.coordinator.bannerView = bannerView
-        return container
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {
-        guard let bannerView = context.coordinator.bannerView else { return }
-        guard !context.coordinator.didLoad else { return }
-        guard AppDelegate.isAdSDKReady else { return }
-
-        let rootVC = UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .first { $0.activationState == .foregroundActive }?
-            .windows.first(where: { $0.isKeyWindow })?
-            .rootViewController
-
-        guard let rootVC else { return }
-        bannerView.rootViewController = rootVC
         bannerView.load(Request())
-        context.coordinator.didLoad = true
+        return controller
     }
 
-    final class Coordinator {
-        var bannerView: BannerView?
-        var didLoad = false
-    }
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
