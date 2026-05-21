@@ -17,7 +17,7 @@ final class AdMobStartup: ObservableObject {
             if #available(iOS 14, *) {
                 _ = await ATTrackingManager.requestTrackingAuthorization()
             }
-            MobileAds.shared.start()
+            await MobileAds.shared.start()
             isReady = true
         }
     }
