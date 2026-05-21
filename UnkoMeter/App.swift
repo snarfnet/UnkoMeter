@@ -1,23 +1,30 @@
 import SwiftUI
 import UIKit
 import GoogleMobileAds
+import AppTrackingTransparency
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
-    ) -> Bool {
-        DispatchQueue.main.async {
+@MainActor
+final class AdMobStartup: ObservableObject {
+    static let shared = AdMobStartup()
+    @Published private(set) var isReady = false
+    private var didRequest = false
+
+    func requestTrackingAndStart() {
+        guard !isReady, !didRequest else { return }
+        didRequest = true
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 1_200_000_000)
+            if #available(iOS 14, *) {
+                _ = await ATTrackingManager.requestTrackingAuthorization()
+            }
             MobileAds.shared.start()
+            isReady = true
         }
-        return true
     }
 }
 
 @main
 struct UnkoMeterApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
     var body: some Scene {
         WindowGroup {
             ContentView()
