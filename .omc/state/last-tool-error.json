@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"# Check what project file ZenSutra uses\\nls \\\"C:/Users/Windows/ZenSutra/\\\"*.xcodeproj \\\"C:/Users/Windows/ZenSutra/project.yml\\\" \\\"C:/Users/Windows/ZenSutra/Package.swift\\\" 2>/dev/null\\nech...",
+  "error": "Exit code 2\nC:/Users/Windows/ZenSutra/ZenSutra.xcodeproj:\nproject.pbxproj\n===",
+  "timestamp": "2026-05-21T01:25:48.691Z",
+  "retry_count": 2
+}
