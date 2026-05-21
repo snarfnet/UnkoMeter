@@ -12,7 +12,6 @@
 		7A1A100C2C10000100100001 /* ToiletTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A10032C10000100100001 /* ToiletTimer.swift */; };
 		7A1A100D2C10000100100001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A1A10042C10000100100001 /* Assets.xcassets */; };
 		7A1A10182C10000100100001 /* AdMobBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1A101A2C10000100100001 /* AdMobBannerView.swift */; };
-		7A1A10192C10000100100001 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7A1A101C2C10000100100001 /* GoogleMobileAds */; };
 		7A1A101D2C10000100100001 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7A1A101E2C10000100100001 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
@@ -31,7 +30,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A1A10192C10000100100001 /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,9 +81,6 @@
 			dependencies = (
 			);
 			name = UnkoMeter;
-			packageProductDependencies = (
-				7A1A101C2C10000100100001 /* GoogleMobileAds */,
-			);
 			productName = UnkoMeter;
 			productReference = 7A1A10052C10000100100001 /* UnkoMeter.app */;
 			productType = "com.apple.product-type.application";
@@ -117,7 +112,6 @@
 			);
 			mainGroup = 7A1A10072C10000100100001;
 			packageReferences = (
-				7A1A101B2C10000100100001 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 7A1A10092C10000100100001 /* Products */;
 			projectDirPath = "";
@@ -361,24 +355,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-/* Begin XCRemoteSwiftPackageReference section */
-		7A1A101B2C10000100100001 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 13.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		7A1A101C2C10000100100001 /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7A1A101B2C10000100100001 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
-			productName = GoogleMobileAds;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7A1A10112C10000100100001 /* Project object */;
 }
