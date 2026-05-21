@@ -7,7 +7,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        MobileAds.shared.start()
+        DispatchQueue.main.async {
+            MobileAds.shared.start()
+        }
         return true
     }
 }
