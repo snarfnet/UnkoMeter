@@ -188,7 +188,7 @@ struct StatsView: View {
     ]
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 AppBackground()
 
@@ -217,7 +217,7 @@ struct StatsView: View {
                     .padding(.bottom, 28)
                 }
             }
-            .navigationBarHidden(true)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 }
@@ -253,7 +253,7 @@ struct SplashView: View {
             VStack(spacing: 18) {
                 Image(systemName: "leaf.circle.fill")
                     .font(.system(size: 84, weight: .bold))
-                    .foregroundStyle(AppPalette.sun, AppPalette.mint)
+                    .foregroundStyle(AppPalette.mint)
 
                 VStack(spacing: 6) {
                     Text("UnkoMeter")
