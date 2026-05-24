@@ -108,22 +108,18 @@ struct ContentView: View {
                     .tag(1)
             }
             .tint(AppPalette.mint)
-            .safeAreaInset(edge: .bottom) {
-                AdMobBannerView()
-                    .background(.white.opacity(0.72))
-            }
 
             if showSplash {
                 SplashView()
-                    .transition(.opacity.combined(with: .scale(scale: 1.03)))
+                    .allowsHitTesting(false)
+                    .transition(.opacity)
                     .zIndex(10)
             }
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-                withAnimation(.easeOut(duration: 0.35)) {
-                    showSplash = false
-                }
+        .task {
+            try? await Task.sleep(nanoseconds: 900_000_000)
+            withAnimation(.easeOut(duration: 0.35)) {
+                showSplash = false
             }
         }
     }
