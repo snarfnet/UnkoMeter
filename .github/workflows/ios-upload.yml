@@ -29,7 +29,7 @@ jobs:
 
       - name: Clean up old certificates
         run: |
-          pip install pyjwt --quiet
+          pip install pyjwt requests --quiet --break-system-packages
           python3 -c "
           import jwt, time, requests
           KEY_ID = 'WDXGY9WX55'
