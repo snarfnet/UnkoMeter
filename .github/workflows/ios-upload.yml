@@ -28,8 +28,9 @@ jobs:
           echo "$ASC_API_KEY_CONTENT" | base64 -D > ~/.appstoreconnect/private_keys/AuthKey_WDXGY9WX55.p8
 
       - name: Clean up old certificates
+        continue-on-error: true
         run: |
-          pip install pyjwt requests --quiet --break-system-packages
+          pip install pyjwt requests --quiet --break-system-packages 2>/dev/null || pip install pyjwt requests --quiet
           python3 -c "
           import jwt, time, requests
           KEY_ID = 'WDXGY9WX55'
