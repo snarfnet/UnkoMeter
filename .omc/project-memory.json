@@ -1,0 +1,102 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779660410356,
+  "projectRoot": "C:\\Users\\Windows\\UnkoMeter",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "AppStore": {
+      "path": "AppStore",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1779660410313,
+      "keyFiles": [
+        "metadata-ja.md",
+        "privacy-answers-ja.md",
+        "submission-checklist.md"
+      ]
+    },
+    "AppStoreAssets": {
+      "path": "AppStoreAssets",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1779660410314,
+      "keyFiles": [
+        "app-icon-source-playful.png",
+        "app-store-icon-preview.png"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 1,
+      "lastAccessed": 1779660410315,
+      "keyFiles": [
+        "privacy-policy.md"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 4,
+      "lastAccessed": 1779660410316,
+      "keyFiles": [
+        "app_store_connect_submission.js",
+        "create_app_record.js",
+        "create_app_store_screenshots.py",
+        "create_app_store_signing.js"
+      ]
+    },
+    "UnkoMeter": {
+      "path": "UnkoMeter",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1779660410316,
+      "keyFiles": [
+        "AdMobBannerView.swift",
+        "App.swift",
+        "ContentView.swift",
+        "PrivacyInfo.xcprivacy",
+        "ToiletTimer.swift"
+      ]
+    },
+    "UnkoMeter.xcodeproj": {
+      "path": "UnkoMeter.xcodeproj",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1779660410317,
+      "keyFiles": [
+        "project.pbxproj"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}
